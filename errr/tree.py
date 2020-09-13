@@ -18,7 +18,7 @@ def exception(*args, **kwargs):
 
         module_name = module_dict["__name__"]
         product_exception.__name__ = name
-        product_exception.__qualname__ = "{}.{}".format(module_name, name)
+        product_exception.__qualname__ = name
         product_exception.__module__ = module_name
         module_dict[name] = product_exception
 

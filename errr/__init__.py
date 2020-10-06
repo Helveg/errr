@@ -1,7 +1,7 @@
 from .exception import DetailedException
 from .tree import make_tree, exception
 
-__version__ = "0.3.1"
+__version__ = "1.0.0"
 
 def wrap(type, e, *details, prepend=None, append=None):
     interpolator = type("", *details)

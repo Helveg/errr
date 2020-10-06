@@ -1,8 +1,15 @@
-def _details_iter(labels, values):
+def _details_iter(labels, extras, values):
     i = 1
+    yielded_extras = False
+    # Skip the first value, which is the error message itself.
     next(values, None)
     while True:
         label = next(labels, None)
+        if not label and not yielded_extras:
+            for y in extras:
+                yield y
+                i += 1
+            yielded_extras = True
         try:
             value = next(values)
             actual_values = True
@@ -30,9 +37,9 @@ class DetailedErrorMetaclass(type):
         return "<class '{}'>".format(self.__module__ + "." + self.__name__)
 
 class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args)
-        self.__dict__["details"] = dict(_details_iter(iter(self.get_detail_labels()), iter(args)))
+        self.__dict__["details"] = dict(_details_iter(iter(self.get_detail_labels()), kwargs.items(), iter(args)))
         self.__dict__["msg"] = args[0] if len(args) > 0 else None
 
     def get_detail_labels(self):
@@ -69,7 +76,7 @@ class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
         match, start, end = next(matches)
         # Keep looking for a match until the last % has been found (the loop exits early
         # after the first replacement has been made, returning the result of a recursive
-        # interpolation call starting the interpolation where this loop stopped.
+        # interpolation call continuing the interpolation where this loop stopped.
         while end != -1:
             # Split on '.' to see if there's any indices or attributes we should lookup in
             # the detail.
@@ -112,4 +119,4 @@ class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
         cls._detail_labels = details
 
 def _err_line(kv):
-    return " {}{}: {}".format(chr(746), kv[0], kv[1])
+    return " {} {}: {}".format(chr(746), kv[0], kv[1])

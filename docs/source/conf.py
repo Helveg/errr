@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Err(o)r'
+project = 'Errr'
 copyright = '2022, Robin De Schepper'
 author = 'Robin De Schepper'
 

@@ -1,4 +1,5 @@
 def _details_iter(labels, extras, values):
+    labels, extras, values = iter(labels), iter(extras), iter(values)
     i = 1
     yielded_extras = False
     # Skip the first value, which is the error message itself.
@@ -37,9 +38,13 @@ class DetailedErrorMetaclass(type):
         return "<class '{}'>".format(self.__module__ + "." + self.__name__)
 
 class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
+    """
+    Base Exception class
+    """
     def __init__(self, *args, **kwargs):
         super().__init__(*args)
-        self.__dict__["details"] = dict(_details_iter(iter(self.get_detail_labels()), kwargs.items(), iter(args)))
+        details = dict(_details_iter(self.get_detail_labels(), kwargs.items(), args))
+        self.__dict__["details"] = details
         self.__dict__["msg"] = args[0] if len(args) > 0 else None
 
     def get_detail_labels(self):

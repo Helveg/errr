@@ -24,6 +24,7 @@ def exception(*args, **kwargs):
         product_exception.__name__ = name
         product_exception.__qualname__ = name
         product_exception.__module__ = module_name
+        product_exception.__doc__ = f"{name} exception"
         module_dict[name] = product_exception
 
         for name, child_injector in kwargs.items():

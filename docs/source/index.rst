@@ -10,7 +10,8 @@ Welcome to Err(o)r's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+   errr
+   modules
 
 Indices and tables
 ==================

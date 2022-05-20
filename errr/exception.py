@@ -111,6 +111,27 @@ class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
         # Nothing to replace found at all, return original message
         return msg
 
+    @classmethod
+    def wrap(err_type, e, *details, prepend=None, append=None):
+        return err_type.wrap(*args, **kwargs)
+        interpolator = err_type("", *details)
+        msg = ""
+        if hasattr(interpolator, "interpolate"):
+            if prepend is not None:
+                msg = interpolator.interpolate(prepend)
+            msg += str(e)
+            if append is not None:
+                msg += interpolator.interpolate(append)
+        else:
+            if prepend is not None:
+                msg = prepend
+            msg += str(e)
+            if append is not None:
+                msg += append
+        err = err_type(msg, *details)
+        err.__traceback__ = e.__traceback__
+        raise err from None
+
     def _get_details_msg(self):
         pass
 

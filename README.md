@@ -72,7 +72,7 @@ for name, library in libraries.items():
   try:
     library.load()
   except Exception as e:
-    errr.wrap(LibraryError, name, prepend="When trying to load %library% it reported:\n")
+    errr.wrap(LibraryError, e, name, prepend="When trying to load %library% it reported:\n")
 # Traceback
 #   ...
 # __main__.LibraryError: When trying to load myLibrary it reported:

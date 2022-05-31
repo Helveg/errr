@@ -113,7 +113,6 @@ class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
 
     @classmethod
     def wrap(err_type, e, *details, prepend=None, append=None):
-        return err_type.wrap(*args, **kwargs)
         interpolator = err_type("", *details)
         msg = ""
         if hasattr(interpolator, "interpolate"):

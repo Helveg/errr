@@ -13,7 +13,7 @@ setuptools.setup(
      name='errr',
      version=__version__,
      author="Robin De Schepper",
-     author_email="robingilbert.deschepper@unipv.it",
+     author_email="robin@alexandria.sc",
      description="Elegant detailed Python exceptions.",
      long_description=long_description,
      long_description_content_type="text/markdown",

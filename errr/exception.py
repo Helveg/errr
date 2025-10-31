@@ -58,6 +58,11 @@ class DetailedException(Exception, metaclass=DetailedErrorMetaclass):
             return self.details[attr]
         return self.__getattribute__(attr)
 
+    def __reduce__(self):
+        # Need to define it for tblib>=3.2 to work
+        # despite it doing nothing more than calling the parent function
+        return super().__reduce__()
+
     def __setattr__(self, attr, value):
         if attr in self.details:
             self.details[attr] = value

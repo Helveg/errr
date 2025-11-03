@@ -1,3 +1,7 @@
+"""
+Elegant detailed Python exceptions.
+"""
+
 from .exception import DetailedException
 from .tree import make_tree, exception
 
